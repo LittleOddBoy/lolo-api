@@ -1,0 +1,36 @@
+{
+  "name": "lolo-api",
+  "version": "0.0.1",
+  "description": "a RESTful blogging API for your next blog application!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "npx tsc",
+    "dev": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LittleOddBoy/lolo-api.git"
+  },
+  "author": "Amirhossein Kalari <hosein.kalari.1387@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LittleOddBoy/lolo-api/issues"
+  },
+  "homepage": "https://github.com/LittleOddBoy/lolo-api#readme",
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.1",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}
