@@ -19,15 +19,19 @@
   },
   "homepage": "https://github.com/LittleOddBoy/lolo-api#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "better-sqlite3": "^11.8.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/better-sqlite3": "^7.6.12",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^22.13.1",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
