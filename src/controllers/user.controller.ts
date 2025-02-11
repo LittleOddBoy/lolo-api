@@ -2,10 +2,13 @@ import { Request, Response } from "express";
 import { initDb } from "../config/database";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
+import * as dotenv from "dotenv";
 import { User } from "../models/user.model";
 
+dotenv.config();
+
 const db = initDb();
-const SECRET_KEY: string = "what's up?";
+const SECRET_KEY: string = process.env.SECRET_KEY as string;
 
 export const signup = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
