@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { initDb } from "../config/database";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
+import { User } from "../models/user.model";
 
 const db = initDb();
 const SECRET_KEY: string = "what's up?";
@@ -41,21 +42,53 @@ export const signup = async (req: Request, res: Response) => {
   const userId = crypto.randomUUID();
 
   // new user schema
-  const newUser = { id: userId, username, email };
+  const newUser: User = { id: userId, username, email };
 
   // insert user into db
   db.prepare(
     "INSERT INTO users (id, username, email, password) VALUES (?, ?, ?, ?)"
   ).run(...Object.values(newUser), hashedPassword);
 
-  const payload = { id: userId, username, email };
+  // create token
+  const payload: User = { id: userId, username, email };
   const token = jwt.sign(payload, SECRET_KEY);
 
   res.status(200).json({
     message: "Signed up successfully!",
-    userData: { ...newUser },
     token,
   });
 };
 
-export const login = (req: Request, res: Response) => {};
+export const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  // ensure everything is passed
+  if (!email || !password) {
+    res
+      .status(400)
+      .json({ message: "All the fields (email and password) must be passed" });
+    return;
+  }
+
+  // find user
+  const user: User = db
+    .prepare("SELECT * FROM users WHERE email = ?")
+    .get(email) as User;
+  if (!user) {
+    res.status(404).json({ message: "No such user does exists" });
+    return;
+  }
+
+  // compare password
+  const passwordMatch = await bcrypt.compare(password, user.password as string);
+  if (!passwordMatch) {
+    res.status(401).json({ message: "Password doesn't match" });
+    return;
+  }
+
+  // re-create token for user
+  const payload = { id: user.id, username: user.username, email };
+  const token = jwt.sign(payload, SECRET_KEY);
+
+  res.status(200).json({ message: "Logged in successfully!", token });
+};
