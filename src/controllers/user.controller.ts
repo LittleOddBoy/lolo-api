@@ -22,7 +22,7 @@ export const signup = async (req: Request, res: Response) => {
   const emailExists = db
     .prepare("SELECT * FROM users WHERE email = ?")
     .get(email);
-  if (emailExists) {
+  if (!emailExists) {
     res.status(400).json({ message: "Email is already in use" });
     return;
   }
@@ -31,8 +31,7 @@ export const signup = async (req: Request, res: Response) => {
   const usernameExists = db
     .prepare("SELECT * FROM users WHERE username = ?")
     .get(username);
-
-  if (usernameExists) {
+  if (!usernameExists) {
     res.status(400).json({ message: "Username is already in use" });
     return;
   }
