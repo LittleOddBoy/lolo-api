@@ -17,3 +17,10 @@ export const commentParamsSchema = z.object({
 export const getCommentsByPostParamsSchema = z.object({
   post_id: z.string().uuid({ message: "Invalid post ID" }),
 });
+
+export type CreateCommentSchema = z.infer<typeof createCommentSchema>;
+export type UpdateCommentSchema = z.infer<typeof updateCommentSchema>;
+export type CommentParamsSchema = z.infer<typeof commentParamsSchema>;
+export type GetCommentsByPostsParamsSchema = z.infer<
+  typeof getCommentsByPostParamsSchema
+>;
