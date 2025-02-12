@@ -13,15 +13,17 @@ import {
   createPostSchema,
   deletePostParamsSchema,
   getPostByIdParamsSchema,
+  searchPostQuerySchema,
   updatePostParamsSchema,
   updatePostSchema,
 } from "../validation/post.schemas";
 import { validateParams } from "../middleware/validateParams.middleware";
+import { validateQuery } from "../middleware/validateQuery.middleware";
 
 const router = express.Router();
 
 router.use(auth);
-router.get("/search", searchPosts);
+router.get("/search", validateQuery(searchPostQuerySchema), searchPosts);
 router.get("/", getAllPosts);
 router.get("/:id", validateParams(getPostByIdParamsSchema), getPostById);
 router.post("/", validateBody(createPostSchema), createPost);
