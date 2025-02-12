@@ -8,17 +8,29 @@ import {
   searchPosts,
 } from "../controllers/post.controller";
 import { auth } from "../middleware/auth.middleware";
-import { validate } from "../middleware/validation.middleware";
-import { createPostSchema, updatePostSchema } from "../validation/post.schemas";
+import { validateBody } from "../middleware/validateBody.middleware";
+import {
+  createPostSchema,
+  deletePostParamsSchema,
+  getPostByIdParamsSchema,
+  updatePostParamsSchema,
+  updatePostSchema,
+} from "../validation/post.schemas";
+import { validateParams } from "../middleware/validateParams.middleware";
 
 const router = express.Router();
 
 router.use(auth);
 router.get("/search", searchPosts);
 router.get("/", getAllPosts);
-router.get("/:id", getPostById);
-router.post("/", validate(createPostSchema), createPost);
-router.put("/:id", validate(updatePostSchema), updatePost);
-router.delete("/:id", deletePost);
+router.get("/:id", validateParams(getPostByIdParamsSchema), getPostById);
+router.post("/", validateBody(createPostSchema), createPost);
+router.put(
+  "/:id",
+  validateParams(updatePostParamsSchema),
+  validateBody(updatePostSchema),
+  updatePost
+);
+router.delete("/:id", validateParams(deletePostParamsSchema), deletePost);
 
 export default router;
