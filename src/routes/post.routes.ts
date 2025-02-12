@@ -8,15 +8,17 @@ import {
   searchPosts,
 } from "../controllers/post.controller";
 import { authenticationMiddleware } from "../middleware/auth.middleware";
+import { validate } from "../middleware/validation.middleware";
+import { createPostSchema, updatePostSchema } from "../validation/post.schemas";
 
 const router = express.Router();
 
-router.use(authenticationMiddleware)
+router.use(authenticationMiddleware);
 router.get("/search", searchPosts);
 router.get("/", getAllPosts);
 router.get("/:id", getPostById);
-router.post("/", createPost);
-router.put("/:id", updatePost);
+router.post("/", validate(createPostSchema), createPost);
+router.put("/:id", validate(updatePostSchema), updatePost);
 router.delete("/:id", deletePost);
 
 export default router;
