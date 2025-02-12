@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as cors from "cors";
+import helmet from "helmet"
 import { json } from "body-parser";
 import * as dotenv from "dotenv";
 import postRoutes from "./routes/post.routes";
@@ -13,6 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
+app.use(helmet());
 app.use(json());
 
 const startServer = async () => {
