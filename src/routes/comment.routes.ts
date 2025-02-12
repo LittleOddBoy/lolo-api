@@ -14,10 +14,13 @@ import {
 } from "../validation/comment.schemas";
 import { validateParams } from "../middleware/validateParams.middleware";
 import { auth } from "../middleware/auth.middleware";
+import { postCommentLimiter } from "../middleware/rateLimit.middleware";
 
 const router = express.Router();
 
 router.use(auth);
+router.use(postCommentLimiter);
+
 router.post("/", validateBody(createCommentSchema), createComment);
 router.get(
   "/post/:postId",
