@@ -1,65 +1,67 @@
 import { Response } from "express";
-import { initDb } from "../config/database";
 import type { AuthenticatedRequest } from "../models/authenticatedRequest.model";
+import * as postService from "../services/post.service";
 
-const db = initDb();
-
-export const getAllPosts = (_: AuthenticatedRequest, res: Response) => {
-  const posts = db.prepare("SELECT * FROM posts").all();
+export const getAllPostsController = (
+  _: AuthenticatedRequest,
+  res: Response
+) => {
+  const posts = postService.getAllPostsService();
   res.json(posts);
 };
 
-export const getPostById = (req: AuthenticatedRequest, res: Response) => {
-  const post = db
-    .prepare("SELECT * FROM posts WHERE id = ?")
-    .get(req.params.id);
+export const getPostByIdController = (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  const post = postService.getPostByIdService(req.params.id);
   if (post) res.json(post);
   else res.status(404).json({ error: "Post not found" });
 };
 
-export const createPost = (req: AuthenticatedRequest, res: Response) => {
-  // get and validate request body and its data
+export const createPostController = (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
   const { title, content } = req.body;
   if (!title || !content) {
     res.status(400).json({ error: "Missing fields" });
     return;
   }
-
-  const newPost = { id: crypto.randomUUID(), title, content };
-  const result = db
-    .prepare("INSERT INTO posts (id, title, content) VALUES (?, ?, ?)")
-    .run(...Object.values(newPost));
-
-  res.status(200).json({
-    id: newPost.id,
-    title: newPost.title,
-    content: newPost.content,
-  });
+  const newPost = postService.createPostService(title, content);
+  res.status(200).json(newPost);
 };
 
-export const updatePost = (req: AuthenticatedRequest, res: Response) => {
+export const updatePostController = (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
   const { title, content } = req.body;
-  db.prepare("UPDATE posts SET title = ?, content = ? WHERE id = ?").run(
+  const updatedPost = postService.updatePostService(
+    req.params.id,
     title,
-    content,
-    req.params.id
+    content
   );
-  res.json({ id: req.params.id, title, content });
+  res.json(updatedPost);
 };
 
-export const deletePost = (req: AuthenticatedRequest, res: Response) => {
-  db.prepare("DELETE FROM posts WHERE id = ?").run(req.params.id);
+export const deletePostController = (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  postService.deletePostService(req.params.id);
   res.json({ message: "Post deleted" });
 };
 
-export const searchPosts = (req: AuthenticatedRequest, res: Response) => {
+export const searchPostsController = (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
   const { q } = req.query;
   if (!q) {
     res.status(400).json({ error: "Query parameter is required" });
     return;
   }
-  const posts = db
-    .prepare("SELECT * FROM posts WHERE title LIKE ? OR content LIKE ?")
-    .all(`%${q}%`, `%${q}%`);
+  const posts = postService.searchPostsService(q as string);
   res.json(posts);
 };

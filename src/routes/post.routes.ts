@@ -1,11 +1,11 @@
 import * as express from "express";
 import {
-  getAllPosts,
-  getPostById,
-  createPost,
-  updatePost,
-  deletePost,
-  searchPosts,
+  getAllPostsController,
+  getPostByIdController,
+  createPostController,
+  updatePostController,
+  deletePostController,
+  searchPostsController,
 } from "../controllers/post.controller";
 import { authorize } from "../middleware/authorize.middleware";
 import { validateBody } from "../middleware/validateBody.middleware";
@@ -33,17 +33,25 @@ router.get(
   "/search",
   searchLimiter,
   validateQuery(searchPostQuerySchema),
-  searchPosts
+  searchPostsController
 );
-router.get("/", getAllPosts);
-router.get("/:id", validateParams(getPostByIdParamsSchema), getPostById);
-router.post("/", validateBody(createPostSchema), createPost);
+router.get("/", getAllPostsController);
+router.get(
+  "/:id",
+  validateParams(getPostByIdParamsSchema),
+  getPostByIdController
+);
+router.post("/", validateBody(createPostSchema), createPostController);
 router.put(
   "/:id",
   validateParams(updatePostParamsSchema),
   validateBody(updatePostSchema),
-  updatePost
+  updatePostController
 );
-router.delete("/:id", validateParams(deletePostParamsSchema), deletePost);
+router.delete(
+  "/:id",
+  validateParams(deletePostParamsSchema),
+  deletePostController
+);
 
 export default router;
