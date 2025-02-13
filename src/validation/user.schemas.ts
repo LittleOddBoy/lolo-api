@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { sanitize } from "../utils";
 
 const usernameRegex = /^@[a-zA-Z0-9_.]+$/;
 
@@ -16,11 +17,13 @@ export const signupSchema = z.object({
     .max(
       35,
       "The username cannot be longer than 35 characters (including at-sign)"
-    ),
-  email: z.string().email(),
+    )
+    .transform(sanitize),
+  email: z.string().email().transform(sanitize),
   password: z
     .string()
-    .min(6, "The password must at least be 8 characters long!"),
+    .min(6, "The password must at least be 8 characters long!")
+    .transform(sanitize),
 });
 
 export const loginSchema = signupSchema.pick({ email: true, password: true });

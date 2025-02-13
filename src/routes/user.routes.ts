@@ -1,7 +1,7 @@
 import * as express from "express";
 import { signup, login } from "../controllers/user.controller";
 import { validateBody } from "../middleware/validateBody.middleware";
-import { loginSchema, signupSchema } from "../validation/user.schema";
+import { loginSchema, signupSchema } from "../validation/user.schemas";
 import { authLimiter } from "../middleware/rateLimit.middleware";
 
 const router = express.Router();

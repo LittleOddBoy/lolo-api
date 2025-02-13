@@ -1,13 +1,18 @@
 import { z } from "zod";
+import { sanitize } from "../utils";
 
 export const getPostByIdParamsSchema = z.object({
   id: z.string().uuid(),
 });
 export const createPostSchema = z.object({
-  title: z.string().min(3, "The title must be at least 3 characters long!"),
+  title: z
+    .string()
+    .min(3, "The title must be at least 3 characters long!")
+    .transform(sanitize),
   content: z
     .string()
-    .min(10, "The content must be at least 10 characters long!"),
+    .min(10, "The content must be at least 10 characters long!")
+    .transform(sanitize),
 });
 export const updatePostSchema = createPostSchema.partial();
 export const updatePostParamsSchema = getPostByIdParamsSchema.partial();
@@ -28,7 +33,8 @@ export const searchPostQuerySchema = z.object({
           q
         ),
       "Potentially dangerous query detected"
-    ),
+    )
+    .transform(sanitize),
 });
 
 export type GetPostByIdParamsSchema = z.infer<typeof getPostByIdParamsSchema>;
