@@ -1,6 +1,6 @@
 {
   "name": "lolo-api",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "a RESTful blogging API for your next blog application!",
   "main": "index.js",
   "scripts": {

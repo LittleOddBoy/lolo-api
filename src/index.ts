@@ -24,9 +24,9 @@ const startServer = async () => {
   // general middlewares
   app.use(generalLimiter);
 
-  app.use("/auth", authRoutes);
-  app.use("/posts", postRoutes);
-  app.use("/comments", commentRoutes);
+  app.use("/v1/auth", authRoutes);
+  app.use("/v1/posts", postRoutes);
+  app.use("/v1/comments", commentRoutes);
 
   app.listen(PORT, () => {
     console.log(`🏃 LOLO is running on http://localhost:${PORT}`);
