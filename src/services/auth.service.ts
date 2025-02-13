@@ -9,6 +9,13 @@ dotenv.config();
 const db = initDb();
 const SECRET_KEY: string = process.env.SECRET_KEY as string;
 
+/**
+ * Sign-up and create an account
+ * @param username - The preferred username
+ * @param email - The user's email
+ * @param password - The password of account
+ * @returns A token based on user data
+ */
 export const signupService = async (
   username: string,
   email: string,
@@ -50,6 +57,12 @@ export const signupService = async (
   return token;
 };
 
+/**
+ * Log in to their account
+ * @param email - The email of user
+ * @param password - The password of their account
+ * @returns A new token based on user data
+ */
 export const loginService = async (
   email: string,
   password: string
@@ -63,10 +76,7 @@ export const loginService = async (
   }
 
   // Compare provided password with stored hash
-  const passwordMatch = await bcrypt.compare(
-    password,
-    user.password as string
-  );
+  const passwordMatch = await bcrypt.compare(password, user.password as string);
   if (!passwordMatch) {
     throw new Error("Password doesn't match");
   }

@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
 import * as commentService from "../services/comment.service";
 
-/**
- * Controller for creating a new comment.
- */
 export const createCommentController = (req: Request, res: Response) => {
   const { postId, userId, content } = req.body;
   if (!postId || !userId || !content) {
@@ -19,9 +16,6 @@ export const createCommentController = (req: Request, res: Response) => {
   res.status(201).json(newComment);
 };
 
-/**
- * Controller for retrieving all comments of a given post.
- */
 export const getCommentsByPostController = (req: Request, res: Response) => {
   const { postId } = req.params;
   if (!postId) {
@@ -33,9 +27,6 @@ export const getCommentsByPostController = (req: Request, res: Response) => {
   res.status(200).json(comments);
 };
 
-/**
- * Controller for updating an existing comment.
- */
 export const updateCommentController = (req: Request, res: Response) => {
   const { id } = req.params;
   const { content } = req.body;
@@ -48,9 +39,6 @@ export const updateCommentController = (req: Request, res: Response) => {
   res.json(updatedComment);
 };
 
-/**
- * Controller for deleting a comment.
- */
 export const deleteCommentController = (req: Request, res: Response) => {
   const { id } = req.params;
   commentService.deleteCommentService(id);
