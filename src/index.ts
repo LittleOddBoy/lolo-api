@@ -4,7 +4,7 @@ import helmet from "helmet";
 import { json } from "body-parser";
 import * as dotenv from "dotenv";
 import postRoutes from "./routes/post.routes";
-import userRoutes from "./routes/user.routes";
+import authRoutes from "./routes/auth.routes";
 import commentRoutes from "./routes/comment.routes";
 import { initDb } from "./config/database";
 import { generalLimiter } from "./middleware/rateLimit.middleware";
@@ -24,8 +24,8 @@ const startServer = async () => {
   // general middlewares
   app.use(generalLimiter);
 
+  app.use("/auth", authRoutes);
   app.use("/posts", postRoutes);
-  app.use("/users", userRoutes);
   app.use("/comments", commentRoutes);
 
   app.listen(PORT, () => {

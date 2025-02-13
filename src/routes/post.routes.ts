@@ -7,7 +7,7 @@ import {
   deletePost,
   searchPosts,
 } from "../controllers/post.controller";
-import { auth } from "../middleware/auth.middleware";
+import { authorize } from "../middleware/authorize.middleware";
 import { validateBody } from "../middleware/validateBody.middleware";
 import {
   createPostSchema,
@@ -26,7 +26,7 @@ import {
 
 const router = express.Router();
 
-router.use(auth);
+router.use(authorize);
 router.use(postCommentLimiter);
 
 router.get(

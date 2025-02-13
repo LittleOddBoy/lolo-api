@@ -13,12 +13,12 @@ import {
   updateCommentSchema,
 } from "../validation/comment.schemas";
 import { validateParams } from "../middleware/validateParams.middleware";
-import { auth } from "../middleware/auth.middleware";
+import { authorize } from "../middleware/authorize.middleware";
 import { postCommentLimiter } from "../middleware/rateLimit.middleware";
 
 const router = express.Router();
 
-router.use(auth);
+router.use(authorize);
 router.use(postCommentLimiter);
 
 router.post("/", validateBody(createCommentSchema), createComment);
