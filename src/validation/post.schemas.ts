@@ -19,7 +19,7 @@ export const searchPostQuerySchema = z.object({
     .min(1, "Query must not be empty")
     .max(50, "Query is too long")
     .regex(
-      /^[a-zA-Z0-9\s]+$/,
+      /^[a-zA-Z0-9.,\-_();\s]+$/,
       "Query can only contain letters, numbers, and spaces"
     )
     .refine(
