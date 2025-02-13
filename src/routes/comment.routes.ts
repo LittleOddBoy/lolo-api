@@ -1,9 +1,9 @@
 import * as express from "express";
 import {
-  createComment,
-  getCommentsByPost,
-  updateComment,
-  deleteComment,
+  createCommentController,
+  getCommentsByPostController,
+  updateCommentController,
+  deleteCommentController,
 } from "../controllers/comment.controller";
 import { validateBody } from "../middleware/validateBody.middleware";
 import {
@@ -21,18 +21,18 @@ const router = express.Router();
 router.use(authorize);
 router.use(postCommentLimiter);
 
-router.post("/", validateBody(createCommentSchema), createComment);
+router.post("/", validateBody(createCommentSchema), createCommentController);
 router.get(
   "/post/:postId",
   validateParams(getCommentsByPostParamsSchema),
-  getCommentsByPost
+  getCommentsByPostController
 );
 router.put(
   "/:id",
   validateParams(commentParamsSchema),
   validateBody(updateCommentSchema),
-  updateComment
+  updateCommentController
 );
-router.delete("/:id", validateParams(commentParamsSchema), deleteComment);
+router.delete("/:id", validateParams(commentParamsSchema), deleteCommentController);
 
 export default router;
