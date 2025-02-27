@@ -1,14 +1,15 @@
-import { initDb } from "../config/database";
-
-const db = initDb();
+import { QueryTypes } from "sequelize";
+import { sequelize } from "../config/sequelize";
+import { Post } from "../models/Post";
 
 /**
  * Retrieves all posts from the database.
  *
  * @returns {Array<Record<string, any>>} Array of post objects.
  */
-export const getAllPostsService = () => {
-  return db.prepare("SELECT * FROM posts").all();
+export const getAllPostsService = async () => {
+  // return db.prepare("SELECT * FROM posts").all();
+  return await Post.findAll();
 };
 
 /**
@@ -17,8 +18,9 @@ export const getAllPostsService = () => {
  * @param {string} id - The UUID of the post.
  * @returns {Record<string, any> | undefined} The post object if found, otherwise undefined.
  */
-export const getPostByIdService = (id: string) => {
-  return db.prepare("SELECT * FROM posts WHERE id = ?").get(id);
+export const getPostByIdService = async (id: string) => {
+  // return db.prepare("SELECT * FROM posts WHERE id = ?").get(id);
+  return await Post.findOne({ where: { id } });
 };
 
 /**
@@ -28,11 +30,15 @@ export const getPostByIdService = (id: string) => {
  * @param {string} content - The content of the post.
  * @returns {object} The newly created post object.
  */
-export const createPostService = (title: string, content: string) => {
-  const newPost = { id: crypto.randomUUID(), title, content };
-  db.prepare("INSERT INTO posts (id, title, content) VALUES (?, ?, ?)")
-    .run(newPost.id, newPost.title, newPost.content);
-  return newPost;
+export const createPostService = async (title: string, content: string) => {
+  // const newPost = { id: crypto.randomUUID(), title, content };
+  // db.prepare("INSERT INTO posts (id, title, content) VALUES (?, ?, ?)").run(
+  //   newPost.id,
+  //   newPost.title,
+  //   newPost.content
+  // );
+  const newPost = await Post.create({ title, content });
+  return newPost.dataValues;
 };
 
 /**
@@ -43,10 +49,21 @@ export const createPostService = (title: string, content: string) => {
  * @param {string} content - The new content of the post.
  * @returns {object} An object containing the updated post data.
  */
-export const updatePostService = (id: string, title: string, content: string) => {
-  db.prepare("UPDATE posts SET title = ?, content = ? WHERE id = ?")
-    .run(title, content, id);
-  return { id, title, content };
+export const updatePostService = async (
+  id: string,
+  title: string,
+  content: string
+) => {
+  // db.prepare("UPDATE posts SET title = ?, content = ? WHERE id = ?").run(
+  //   title,
+  //   content,
+  //   id
+  // );
+  // return { id, title, content };
+  const targetPost = await Post.findOne({ where: { id } });
+  const updatedPost = await targetPost?.update({ title, content });
+
+  return updatedPost?.dataValues;
 };
 
 /**
@@ -54,8 +71,10 @@ export const updatePostService = (id: string, title: string, content: string) =>
  *
  * @param {string} id - The UUID of the post to delete.
  */
-export const deletePostService = (id: string) => {
-  db.prepare("DELETE FROM posts WHERE id = ?").run(id);
+export const deletePostService = async (id: string) => {
+  // db.prepare("DELETE FROM posts WHERE id = ?").run(id);
+  const targetPost = await Post.findOne({ where: { id } });
+  targetPost?.destroy();
 };
 
 /**
@@ -64,8 +83,15 @@ export const deletePostService = (id: string) => {
  * @param {string} query - The search term to match against posts.
  * @returns {Array<Record<string, any>>} Array of posts matching the search criteria.
  */
-export const searchPostsService = (query: string) => {
-  return db
-    .prepare("SELECT * FROM posts WHERE title LIKE ? OR content LIKE ?")
-    .all(`%${query}%`, `%${query}%`);
+export const searchPostsService = async (query: string) => {
+  // return db
+  //   .prepare("SELECT * FROM posts WHERE title LIKE ? OR content LIKE ?")
+  //   .all(`%${query}%`, `%${query}%`);
+  return await sequelize.query(
+    "SELECT * FROM posts WHERE (title LIKE :query OR content LIKE :query)",
+    {
+      replacements: { query: `%${query}%` },
+      type: QueryTypes.SELECT,
+    }
+  );
 };

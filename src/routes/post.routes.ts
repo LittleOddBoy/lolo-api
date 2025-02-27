@@ -20,14 +20,14 @@ import {
 import { validateParams } from "../middleware/validateParams.middleware";
 import { validateQuery } from "../middleware/validateQuery.middleware";
 import {
-  postCommentLimiter,
+  commentLimiter,
   searchLimiter,
 } from "../middleware/rateLimit.middleware";
 
 const router = express.Router();
 
 router.use(authorize);
-router.use(postCommentLimiter);
+router.use(commentLimiter);
 
 router.get(
   "/search",
