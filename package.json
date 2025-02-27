@@ -20,14 +20,15 @@
   "homepage": "https://github.com/LittleOddBoy/lolo-api#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "better-sqlite3": "^11.8.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-rate-limit": "^7.5.0",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.12.0",
     "sanitize-html": "^2.14.0",
+    "sequelize": "^6.37.5",
     "zod": "^3.24.2"
   },
   "devDependencies": {
