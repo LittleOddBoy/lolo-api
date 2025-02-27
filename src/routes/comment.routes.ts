@@ -14,12 +14,12 @@ import {
 } from "../validation/comment.schemas";
 import { validateParams } from "../middleware/validateParams.middleware";
 import { authorize } from "../middleware/authorize.middleware";
-import { postCommentLimiter } from "../middleware/rateLimit.middleware";
+import { commentLimiter } from "../middleware/rateLimit.middleware";
 
 const router = express.Router();
 
 router.use(authorize);
-router.use(postCommentLimiter);
+router.use(commentLimiter);
 
 router.post("/", validateBody(createCommentSchema), createCommentController);
 router.get(
@@ -33,6 +33,10 @@ router.put(
   validateBody(updateCommentSchema),
   updateCommentController
 );
-router.delete("/:id", validateParams(commentParamsSchema), deleteCommentController);
+router.delete(
+  "/:id",
+  validateParams(commentParamsSchema),
+  deleteCommentController
+);
 
 export default router;
