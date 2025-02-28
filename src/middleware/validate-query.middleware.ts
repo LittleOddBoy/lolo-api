@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodSchema } from "zod";
-import { AuthenticatedRequestType } from "../interfaces/authenticatedRequest.interface";
+import { AuthenticatedRequestType } from "@/interfaces/authenticatedRequest.interface";
 
 export const validateQuery =
   (schema: ZodSchema) =>

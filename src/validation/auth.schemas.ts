@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { sanitize } from "../utils";
+import { sanitize } from "@/utils";
 
 const usernameRegex = /^@[a-zA-Z0-9_.]+$/;
 

@@ -2,10 +2,10 @@ import * as express from "express";
 import {
   signupController,
   loginController,
-} from "../controllers/auth.controller";
-import { validateBody } from "../middleware/validate-body.middleware";
-import { loginSchema, signupSchema } from "../validation/auth.schemas";
-import { authLimiter } from "../middleware/rate-limit.middleware";
+} from "@/controllers/auth.controller";
+import { validateBody } from "@/middleware/validate-body.middleware";
+import { loginSchema, signupSchema } from "@/validation/auth.schemas";
+import { authLimiter } from "@/middleware/rate-limit.middleware";
 
 const router = express.Router();
 

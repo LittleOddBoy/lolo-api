@@ -1,19 +1,22 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../config/sequelize";
-import { User } from "./user.model";
+import { sequelize } from "~/config/sequelize";
 
-export const Post = sequelize.define("Post", {
+export const User = sequelize.define("User", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-  title: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  content: {
-    type: DataTypes.TEXT,
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  password: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
   createdAt: {
@@ -21,6 +24,3 @@ export const Post = sequelize.define("Post", {
     defaultValue: DataTypes.NOW,
   },
 });
-
-Post.belongsTo(User, { foreignKey: "userId", onDelete: "CASCADE" });
-User.hasMany(Post, { foreignKey: "userId" });
