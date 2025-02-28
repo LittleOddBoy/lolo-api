@@ -9,17 +9,17 @@ const SECRET_KEY: string = process.env.SECRET_KEY as string;
 
 /**
  * Sign-up and create an account
- * 
+ *
  * @param username - The preferred username
  * @param email - The user's email
  * @param password - The password of account
  * @returns A token based on user data
  */
-export const signupService = async (
+export async function signupService(
   username: string,
   email: string,
   password: string
-): Promise<string> => {
+): Promise<string> {
   // Check if email already exists
   const emailExists = await User.findOne({ where: { email } });
   if (emailExists) {
@@ -52,19 +52,19 @@ export const signupService = async (
     SECRET_KEY
   );
   return token;
-};
+}
 
 /**
  * Log in to their account
- * 
+ *
  * @param email - The email of user
  * @param password - The password of their account
  * @returns A new token based on user data
  */
-export const loginService = async (
+export async function loginService(
   email: string,
   password: string
-): Promise<string> => {
+): Promise<string> {
   // Find user by email
   const user = await User.findOne({ where: { email } });
   if (!user) {
@@ -82,7 +82,6 @@ export const loginService = async (
 
   // Create token for user
   const token = jwt.sign(
-    // { id: user.id, username: user.username, email: user.email },
     {
       id: user.dataValues.id,
       username: user.dataValues.username,
@@ -90,6 +89,6 @@ export const loginService = async (
     },
     SECRET_KEY
   );
-  
+
   return token;
-};
+}
