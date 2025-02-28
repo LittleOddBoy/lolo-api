@@ -1,5 +1,5 @@
 import { QueryTypes } from "sequelize";
-import { sequelize } from "../config/sequelize";
+import { sequelize } from "../sequelize";
 import { Post } from "../models/post.model";
 
 /**

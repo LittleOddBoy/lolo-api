@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
-    "rootDir": "./src",
+    "rootDirs": ["./src", "./db", "./config"],
     "outDir": "./dist",
     "strict": true
   }
