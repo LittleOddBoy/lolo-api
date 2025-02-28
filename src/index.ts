@@ -6,8 +6,8 @@ import * as dotenv from "dotenv";
 import postRoutes from "./routes/post.routes";
 import authRoutes from "./routes/auth.routes";
 import commentRoutes from "./routes/comment.routes";
-import { initDb } from "./config/database";
-import { generalLimiter } from "./middleware/rateLimit.middleware";
+import { connectDb } from "./config/sequelize";
+import { generalLimiter } from "./middleware/rate-limit.middleware";
 
 dotenv.config();
 
@@ -19,18 +19,22 @@ app.use(helmet());
 app.use(json());
 
 const startServer = async () => {
-  const db = initDb();
+  try {
+    await connectDb();
 
-  // general middlewares
-  app.use(generalLimiter);
+    // general middlewares
+    app.use(generalLimiter);
 
-  app.use("/v1/auth", authRoutes);
-  app.use("/v1/posts", postRoutes);
-  app.use("/v1/comments", commentRoutes);
+    app.use("/v2/auth", authRoutes);
+    app.use("/v2/posts", postRoutes);
+    app.use("/v2/comments", commentRoutes);
 
-  app.listen(PORT, () => {
-    console.log(`🏃 LOLO is running on http://localhost:${PORT}`);
-  });
+    app.listen(PORT, () => {
+      console.log(`🏃 LOLO is running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+  }
 };
 
 startServer();

@@ -1,9 +1,9 @@
 import { NextFunction, Response } from "express";
 import * as jwt from "jsonwebtoken";
-import { AuthenticatedRequest } from "../models/authenticatedRequest.model";
+import { AuthenticatedRequestType } from "../interfaces/authenticatedRequest.interface";
 
-export const authorize = async (
-  req: AuthenticatedRequest,
+export const authorizeMiddleware = async (
+  req: AuthenticatedRequestType,
   res: Response,
   next: NextFunction
 ) => {

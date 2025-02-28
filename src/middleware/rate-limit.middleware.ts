@@ -15,7 +15,7 @@ export const authLimiter = rateLimit({
 });
 
 // Post/comment creation limiter
-export const postCommentLimiter = rateLimit({
+export const commentLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
   max: 10, // Max 10 requests per minute
   message: "Too many posts/comments. Slow down.",

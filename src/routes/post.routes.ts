@@ -7,8 +7,8 @@ import {
   deletePostController,
   searchPostsController,
 } from "../controllers/post.controller";
-import { authorize } from "../middleware/authorize.middleware";
-import { validateBody } from "../middleware/validateBody.middleware";
+import { authorizeMiddleware } from "../middleware/authorize.middleware";
+import { validateBody } from "../middleware/validate-body.middleware";
 import {
   createPostSchema,
   deletePostParamsSchema,
@@ -17,17 +17,17 @@ import {
   updatePostParamsSchema,
   updatePostSchema,
 } from "../validation/post.schemas";
-import { validateParams } from "../middleware/validateParams.middleware";
-import { validateQuery } from "../middleware/validateQuery.middleware";
+import { validateParams } from "../middleware/validate-params.middleware";
+import { validateQuery } from "../middleware/validate-query.middleware";
 import {
-  postCommentLimiter,
+  commentLimiter,
   searchLimiter,
-} from "../middleware/rateLimit.middleware";
+} from "../middleware/rate-limit.middleware";
 
 const router = express.Router();
 
-router.use(authorize);
-router.use(postCommentLimiter);
+router.use(authorizeMiddleware);
+router.use(commentLimiter);
 
 router.get(
   "/search",
@@ -41,13 +41,16 @@ router.get(
   validateParams(getPostByIdParamsSchema),
   getPostByIdController
 );
+
 router.post("/", validateBody(createPostSchema), createPostController);
+
 router.put(
   "/:id",
   validateParams(updatePostParamsSchema),
   validateBody(updatePostSchema),
   updatePostController
 );
+
 router.delete(
   "/:id",
   validateParams(deletePostParamsSchema),

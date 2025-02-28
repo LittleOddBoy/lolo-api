@@ -1,43 +1,44 @@
 import { Response } from "express";
-import type { AuthenticatedRequest } from "../models/authenticatedRequest.model";
+import type { AuthenticatedRequestType } from "../interfaces/authenticatedRequest.interface";
 import * as postService from "../services/post.service";
 
-export const getAllPostsController = (
-  _: AuthenticatedRequest,
+export const getAllPostsController = async (
+  _: AuthenticatedRequestType,
   res: Response
 ) => {
-  const posts = postService.getAllPostsService();
+  const posts = await postService.getAllPostsService();
   res.json(posts);
 };
 
-export const getPostByIdController = (
-  req: AuthenticatedRequest,
+export const getPostByIdController = async (
+  req: AuthenticatedRequestType,
   res: Response
 ) => {
-  const post = postService.getPostByIdService(req.params.id);
+  const post = await postService.getPostByIdService(req.params.id);
   if (post) res.json(post);
   else res.status(404).json({ error: "Post not found" });
 };
 
-export const createPostController = (
-  req: AuthenticatedRequest,
+export const createPostController = async (
+  req: AuthenticatedRequestType,
   res: Response
 ) => {
-  const { title, content } = req.body;
-  if (!title || !content) {
+  const { title, content, userId } = req.body;
+  if (!title || !content || !userId) {
     res.status(400).json({ error: "Missing fields" });
     return;
   }
-  const newPost = postService.createPostService(title, content);
+
+  const newPost = await postService.createPostService(title, content, userId);
   res.status(200).json(newPost);
 };
 
-export const updatePostController = (
-  req: AuthenticatedRequest,
+export const updatePostController = async (
+  req: AuthenticatedRequestType,
   res: Response
 ) => {
   const { title, content } = req.body;
-  const updatedPost = postService.updatePostService(
+  const updatedPost = await postService.updatePostService(
     req.params.id,
     title,
     content
@@ -45,16 +46,16 @@ export const updatePostController = (
   res.json(updatedPost);
 };
 
-export const deletePostController = (
-  req: AuthenticatedRequest,
+export const deletePostController = async (
+  req: AuthenticatedRequestType,
   res: Response
 ) => {
-  postService.deletePostService(req.params.id);
+  await postService.deletePostService(req.params.id);
   res.json({ message: "Post deleted" });
 };
 
-export const searchPostsController = (
-  req: AuthenticatedRequest,
+export const searchPostsController = async (
+  req: AuthenticatedRequestType,
   res: Response
 ) => {
   const { q } = req.query;
@@ -62,6 +63,6 @@ export const searchPostsController = (
     res.status(400).json({ error: "Query parameter is required" });
     return;
   }
-  const posts = postService.searchPostsService(q as string);
+  const posts = await postService.searchPostsService(q as string);
   res.json(posts);
 };

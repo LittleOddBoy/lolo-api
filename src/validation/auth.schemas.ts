@@ -24,9 +24,9 @@ export const signupSchema = z.object({
     .string()
     .min(6, "The password must at least be 8 characters long!")
     .transform(sanitize),
-});
+}).required();
 
-export const loginSchema = signupSchema.pick({ email: true, password: true });
+export const loginSchema = signupSchema.pick({ email: true, password: true }).required();
 
 export type SignupSchema = z.infer<typeof signupSchema>;
 export type LoginSchema = z.infer<typeof loginSchema>;
