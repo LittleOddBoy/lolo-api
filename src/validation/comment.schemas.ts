@@ -3,11 +3,11 @@ import { sanitize } from "../utils";
 
 export const createCommentSchema = z
   .object({
-    post_id: z
+    postId: z
       .string()
       .uuid({ message: "Invalid post ID" })
       .transform(sanitize),
-    user_id: z
+    userId: z
       .string()
       .uuid({ message: "Invalid user ID" })
       .transform(sanitize),
@@ -26,7 +26,7 @@ export const commentParamsSchema = z.object({
 });
 
 export const getCommentsByPostParamsSchema = z.object({
-  post_id: z.string().uuid({ message: "Invalid post ID" }).transform(sanitize),
+  postId: z.string().uuid({ message: "Invalid post ID" }).transform(sanitize),
 });
 
 export type CreateCommentSchema = z.infer<typeof createCommentSchema>;

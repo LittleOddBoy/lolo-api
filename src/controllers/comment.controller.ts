@@ -26,7 +26,7 @@ export const getCommentsByPostController = async (
 ) => {
   const { postId } = req.params;
   if (!postId) {
-    res.status(400).json({ error: "post_id parameter is required" });
+    res.status(400).json({ error: "`postId` parameter is required" });
     return;
   }
 

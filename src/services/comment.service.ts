@@ -26,7 +26,7 @@ export async function createCommentService(
 export async function getCommentsByPostService(postId: string) {
   return await Comment.findOne({
     where: { postId },
-    order: [["created_at", "ASC"]],
+    order: [["createdAt", "ASC"]],
   });
 }
 
