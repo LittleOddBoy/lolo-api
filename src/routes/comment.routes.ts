@@ -21,12 +21,12 @@ const router = express.Router();
 router.use(authorize);
 router.use(commentLimiter);
 
-router.post("/", validateBody(createCommentSchema), createCommentController);
 router.get(
   "/post/:postId",
   validateParams(getCommentsByPostParamsSchema),
   getCommentsByPostController
 );
+router.post("/", validateBody(createCommentSchema), createCommentController);
 router.put(
   "/:id",
   validateParams(commentParamsSchema),

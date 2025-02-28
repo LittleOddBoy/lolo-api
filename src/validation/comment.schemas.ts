@@ -1,15 +1,25 @@
 import { z } from "zod";
 import { sanitize } from "../utils";
 
-export const createCommentSchema = z.object({
-  post_id: z.string().uuid({ message: "Invalid post ID" }).transform(sanitize),
-  user_id: z.string().uuid({ message: "Invalid user ID" }).transform(sanitize),
-  content: z.string().min(1, { message: "Content is required" }).transform(sanitize),
-});
+export const createCommentSchema = z
+  .object({
+    post_id: z
+      .string()
+      .uuid({ message: "Invalid post ID" })
+      .transform(sanitize),
+    user_id: z
+      .string()
+      .uuid({ message: "Invalid user ID" })
+      .transform(sanitize),
+    content: z
+      .string()
+      .min(1, { message: "Content is required" })
+      .max(200, { message: "Comment's content is too long!" })
+      .transform(sanitize),
+  })
+  .required();
 
-export const updateCommentSchema = z.object({
-  content: z.string().min(1, { message: "Content is required" }).transform(sanitize),
-});
+export const updateCommentSchema = createCommentSchema.pick({ content: true });
 
 export const commentParamsSchema = z.object({
   id: z.string().uuid({ message: "Invalid comment ID" }).transform(sanitize),
