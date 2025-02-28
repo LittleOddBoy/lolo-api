@@ -3,9 +3,9 @@ import {
   signupController,
   loginController,
 } from "../controllers/auth.controller";
-import { validateBody } from "../middleware/validateBody.middleware";
+import { validateBody } from "../middleware/validate-body.middleware";
 import { loginSchema, signupSchema } from "../validation/auth.schemas";
-import { authLimiter } from "../middleware/rateLimit.middleware";
+import { authLimiter } from "../middleware/rate-limit.middleware";
 
 const router = express.Router();
 

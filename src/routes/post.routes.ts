@@ -8,7 +8,7 @@ import {
   searchPostsController,
 } from "../controllers/post.controller";
 import { authorizeMiddleware } from "../middleware/authorize.middleware";
-import { validateBody } from "../middleware/validateBody.middleware";
+import { validateBody } from "../middleware/validate-body.middleware";
 import {
   createPostSchema,
   deletePostParamsSchema,
@@ -17,12 +17,12 @@ import {
   updatePostParamsSchema,
   updatePostSchema,
 } from "../validation/post.schemas";
-import { validateParams } from "../middleware/validateParams.middleware";
-import { validateQuery } from "../middleware/validateQuery.middleware";
+import { validateParams } from "../middleware/validate-params.middleware";
+import { validateQuery } from "../middleware/validate-query.middleware";
 import {
   commentLimiter,
   searchLimiter,
-} from "../middleware/rateLimit.middleware";
+} from "../middleware/rate-limit.middleware";
 
 const router = express.Router();
 

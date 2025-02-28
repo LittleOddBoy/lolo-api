@@ -7,7 +7,7 @@ import postRoutes from "./routes/post.routes";
 import authRoutes from "./routes/auth.routes";
 import commentRoutes from "./routes/comment.routes";
 import { connectDb } from "./config/sequelize";
-import { generalLimiter } from "./middleware/rateLimit.middleware";
+import { generalLimiter } from "./middleware/rate-limit.middleware";
 
 dotenv.config();
 
@@ -21,14 +21,14 @@ app.use(json());
 const startServer = async () => {
   try {
     await connectDb();
-  
+
     // general middlewares
     app.use(generalLimiter);
-  
+
     app.use("/v2/auth", authRoutes);
     app.use("/v2/posts", postRoutes);
     app.use("/v2/comments", commentRoutes);
-  
+
     app.listen(PORT, () => {
       console.log(`🏃 LOLO is running on http://localhost:${PORT}`);
     });
