@@ -3,7 +3,7 @@ import { sanitize } from "../utils";
 
 export const getPostByIdParamsSchema = z.object({
   id: z.string().uuid(),
-});
+}).required();
 export const createPostSchema = z.object({
   title: z
     .string()
@@ -13,8 +13,9 @@ export const createPostSchema = z.object({
     .string()
     .min(10, "The content must be at least 10 characters long!")
     .transform(sanitize),
-});
-export const updatePostSchema = createPostSchema.partial();
+  userId: z.string().uuid()
+}).required();
+export const updatePostSchema = createPostSchema.partial({ userId: true });
 export const updatePostParamsSchema = getPostByIdParamsSchema.partial();
 export const deletePostParamsSchema = getPostByIdParamsSchema.partial();
 export const searchPostQuerySchema = z.object({
@@ -35,7 +36,7 @@ export const searchPostQuerySchema = z.object({
       "Potentially dangerous query detected"
     )
     .transform(sanitize),
-});
+}).required();
 
 export type GetPostByIdParamsSchema = z.infer<typeof getPostByIdParamsSchema>;
 export type CreatePostSchema = z.infer<typeof createPostSchema>;

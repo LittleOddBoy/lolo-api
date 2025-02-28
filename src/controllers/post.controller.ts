@@ -23,13 +23,13 @@ export const createPostController = async (
   req: AuthenticatedRequestType,
   res: Response
 ) => {
-  const { title, content } = req.body;
-  if (!title || !content) {
+  const { title, content, userId } = req.body;
+  if (!title || !content || !userId) {
     res.status(400).json({ error: "Missing fields" });
     return;
   }
-  const newPost = await postService.createPostService(title, content);
-  console.log(newPost);
+
+  const newPost = await postService.createPostService(title, content, userId);
   res.status(200).json(newPost);
 };
 

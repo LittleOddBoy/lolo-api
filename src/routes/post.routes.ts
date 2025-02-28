@@ -41,13 +41,16 @@ router.get(
   validateParams(getPostByIdParamsSchema),
   getPostByIdController
 );
+
 router.post("/", validateBody(createPostSchema), createPostController);
+
 router.put(
   "/:id",
   validateParams(updatePostParamsSchema),
   validateBody(updatePostSchema),
   updatePostController
 );
+
 router.delete(
   "/:id",
   validateParams(deletePostParamsSchema),

@@ -28,16 +28,15 @@ export const getPostByIdService = async (id: string) => {
  *
  * @param {string} title - The title of the post.
  * @param {string} content - The content of the post.
+ * @param {string} userId - The user's id that the post belongs to.
  * @returns {object} The newly created post object.
  */
-export const createPostService = async (title: string, content: string) => {
-  // const newPost = { id: crypto.randomUUID(), title, content };
-  // db.prepare("INSERT INTO posts (id, title, content) VALUES (?, ?, ?)").run(
-  //   newPost.id,
-  //   newPost.title,
-  //   newPost.content
-  // );
-  const newPost = await Post.create({ title, content });
+export const createPostService = async (
+  title: string,
+  content: string,
+  userId: string
+) => {
+  const newPost = await Post.create({ title, content, userId });
   return newPost.dataValues;
 };
 
