@@ -1,6 +1,6 @@
 import { QueryTypes } from "sequelize";
 import { sequelize } from "../config/sequelize";
-import { Post } from "../models/Post";
+import { Post } from "../models/post.model";
 
 /**
  * Retrieves all posts from the database.
@@ -46,7 +46,7 @@ export async function createPostService(
  * @param {string} content - The new content of the post.
  * @returns An object containing the updated post data.
  */
-export async function updatePostService (
+export async function updatePostService(
   id: string,
   title: string,
   content: string
@@ -55,17 +55,17 @@ export async function updatePostService (
   const updatedPost = await targetPost?.update({ title, content });
 
   return updatedPost?.dataValues;
-};
+}
 
 /**
  * Deletes a post from the database.
  *
  * @param {string} id - The UUID of the post to delete.
  */
-export async function deletePostService (id: string) {
+export async function deletePostService(id: string) {
   const targetPost = await Post.findOne({ where: { id } });
   targetPost?.destroy();
-};
+}
 
 /**
  * Searches for posts by a query string in the title or content.
@@ -73,7 +73,7 @@ export async function deletePostService (id: string) {
  * @param {string} query - The search term to match against posts.
  * @returns Array of posts matching the search criteria.
  */
-export async function searchPostsService (query: string) {
+export async function searchPostsService(query: string) {
   return await sequelize.query(
     "SELECT * FROM posts WHERE (title LIKE :query OR content LIKE :query)",
     {
@@ -81,4 +81,4 @@ export async function searchPostsService (query: string) {
       type: QueryTypes.SELECT,
     }
   );
-};
+}
