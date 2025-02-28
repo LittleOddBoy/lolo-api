@@ -1,6 +1,6 @@
 # Lolo API
 
-Lolo API is a TypeScript-based RESTful API built with Node.js and Express. It provides essential backend functionality for managing data and services efficiently.
+Lolo API is a TypeScript-based RESTful API built with Node.js and Express. It provides essential backend functionality for managing data and services efficiently. This project is one of the [Backend project](https://roadmap.sh/projects/blogging-platform-api) of [roadmap.sh](https://roadmap.sh/projects) collection.
 
 ## Features
 - Built with **Node.js**, **Express**, and **TypeScript**
