@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
 import * as commentService from "../services/comment.service";
+import { AuthenticatedRequestType } from "../interfaces/authenticatedRequest.interface";
 
-export const createCommentController = async (req: Request, res: Response) => {
+export const createCommentController = async (
+  req: AuthenticatedRequestType,
+  res: Response
+) => {
   const { postId, userId, content } = req.body;
   if (!postId || !userId || !content) {
     res.status(400).json({ error: "Missing fields" });
@@ -17,7 +21,7 @@ export const createCommentController = async (req: Request, res: Response) => {
 };
 
 export const getCommentsByPostController = async (
-  req: Request,
+  req: AuthenticatedRequestType,
   res: Response
 ) => {
   const { postId } = req.params;
@@ -30,7 +34,10 @@ export const getCommentsByPostController = async (
   res.status(200).json(comments);
 };
 
-export const updateCommentController = async (req: Request, res: Response) => {
+export const updateCommentController = async (
+  req: AuthenticatedRequestType,
+  res: Response
+) => {
   const { id } = req.params;
   const { content } = req.body;
   if (!content) {
