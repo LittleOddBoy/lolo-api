@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { sanitize } from "../utils";
+import { sanitize } from "@/utils";
 
 export const createCommentSchema = z
   .object({

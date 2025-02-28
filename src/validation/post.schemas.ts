@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { sanitize } from "../utils";
+import { sanitize } from "@/utils";
 
 export const getPostByIdParamsSchema = z.object({
   id: z.string().uuid(),

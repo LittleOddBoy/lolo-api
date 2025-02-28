@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../sequelize";
-import { User } from "./user.model";
-import { Post } from "./post.model";
+import { sequelize } from "~/config/sequelize";
+import { User } from "~/db/models/user.model";
+import { Post } from "~/db/models/post.model";
 
 export const Comment = sequelize.define("Comment", {
   id: {

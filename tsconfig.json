@@ -4,6 +4,10 @@
     "module": "CommonJS",
     "rootDirs": ["./src", "./db", "./config"],
     "outDir": "./dist",
-    "strict": true
+    "strict": true,
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./src/*"]
+    }
   }
 }

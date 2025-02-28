@@ -1,4 +1,4 @@
-import { Comment } from "../models/comment.model";
+import { Comment } from "~/db/models/comment.model";
 
 /**
  * Creates a new comment in the database.
