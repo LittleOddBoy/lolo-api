@@ -2,7 +2,7 @@ import { NextFunction, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { AuthenticatedRequestType } from "../interfaces/authenticatedRequest.interface";
 
-export const authorize = async (
+export const authorizeMiddleware = async (
   req: AuthenticatedRequestType,
   res: Response,
   next: NextFunction

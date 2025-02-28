@@ -13,12 +13,12 @@ import {
   updateCommentSchema,
 } from "../validation/comment.schemas";
 import { validateParams } from "../middleware/validateParams.middleware";
-import { authorize } from "../middleware/authorize.middleware";
+import { authorizeMiddleware } from "../middleware/authorize.middleware";
 import { commentLimiter } from "../middleware/rateLimit.middleware";
 
 const router = express.Router();
 
-router.use(authorize);
+router.use(authorizeMiddleware);
 router.use(commentLimiter);
 
 router.get(
