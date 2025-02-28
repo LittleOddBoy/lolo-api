@@ -5,7 +5,7 @@ import * as dotenv from "dotenv";
 import postRoutes from "@/routes/post.routes";
 import authRoutes from "@/routes/auth.routes";
 import commentRoutes from "@/routes/comment.routes";
-import { connectDb } from "~/config/sequelize";
+import { connectDb } from "~/src/config/sequelize";
 import { generalLimiter } from "@/middleware/rate-limit.middleware";
 
 dotenv.config();
