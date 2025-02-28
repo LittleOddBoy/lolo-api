@@ -1,4 +1,4 @@
-import { User } from "~/src/db/models/user.model";
+import { User } from "~/src/db/entities/user.model";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";

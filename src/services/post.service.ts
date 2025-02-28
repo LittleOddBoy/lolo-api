@@ -1,6 +1,6 @@
 import { QueryTypes } from "sequelize";
 import { sequelize } from "~/src/config/sequelize";
-import { Post } from "~/src/db/models/post.model";
+import { Post } from "~/src/db/entities/post.model";
 
 /**
  * Retrieves all posts from the database.

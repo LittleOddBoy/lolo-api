@@ -4,7 +4,7 @@ import {
   loginController,
 } from "@/controllers/auth.controller";
 import { validateBody } from "@/middleware/validate-body.middleware";
-import { loginSchema, signupSchema } from "@/validation/auth.schemas";
+import { loginSchema, signupSchema } from "~/src/schemas/auth.schemas";
 import { authLimiter } from "@/middleware/rate-limit.middleware";
 
 const router = express.Router();

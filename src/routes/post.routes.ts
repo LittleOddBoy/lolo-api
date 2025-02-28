@@ -16,7 +16,7 @@ import {
   searchPostQuerySchema,
   updatePostParamsSchema,
   updatePostSchema,
-} from "@/validation/post.schemas";
+} from "~/src/schemas/post.schemas";
 import { validateParams } from "@/middleware/validate-params.middleware";
 import { validateQuery } from "@/middleware/validate-query.middleware";
 import {

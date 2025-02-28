@@ -11,7 +11,7 @@ import {
   createCommentSchema,
   getCommentsByPostParamsSchema,
   updateCommentSchema,
-} from "@/validation/comment.schemas";
+} from "~/src/schemas/comment.schemas";
 import { validateParams } from "@/middleware/validate-params.middleware";
 import { authorizeMiddleware } from "@/middleware/authorize.middleware";
 import { commentLimiter } from "@/middleware/rate-limit.middleware";
