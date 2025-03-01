@@ -1,6 +1,6 @@
 import { Response } from "express";
-import type { AuthenticatedRequestType } from "@/interfaces/authenticatedRequest.interface";
-import * as postService from "@/services/post.service";
+import type { AuthenticatedRequestType } from "~/interfaces/authenticatedRequest.interface";
+import * as postService from "~/services/post.service";
 
 export const getAllPostsController = async (
   _: AuthenticatedRequestType,

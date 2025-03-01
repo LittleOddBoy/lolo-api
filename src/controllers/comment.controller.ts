@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import * as commentService from "@/services/comment.service";
-import { AuthenticatedRequestType } from "@/interfaces/authenticatedRequest.interface";
+import * as commentService from "~/services/comment.service";
+import { AuthenticatedRequestType } from "~/interfaces/authenticatedRequest.interface";
 
 export const createCommentController = async (
   req: AuthenticatedRequestType,
