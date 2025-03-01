@@ -6,9 +6,9 @@ import {
   updatePostController,
   deletePostController,
   searchPostsController,
-} from "@/controllers/post.controller";
-import { authorizeMiddleware } from "@/middleware/authorize.middleware";
-import { validateBody } from "@/middleware/validate-body.middleware";
+} from "~/controllers/post.controller";
+import { authorizeMiddleware } from "~/middleware/authorize.middleware";
+import { validateBody } from "~/middleware/validate-body.middleware";
 import {
   createPostSchema,
   deletePostParamsSchema,
@@ -17,12 +17,12 @@ import {
   updatePostParamsSchema,
   updatePostSchema,
 } from "~/src/schemas/post.schemas";
-import { validateParams } from "@/middleware/validate-params.middleware";
-import { validateQuery } from "@/middleware/validate-query.middleware";
+import { validateParams } from "~/middleware/validate-params.middleware";
+import { validateQuery } from "~/middleware/validate-query.middleware";
 import {
   commentLimiter,
   searchLimiter,
-} from "@/middleware/rate-limit.middleware";
+} from "~/middleware/rate-limit.middleware";
 
 const router = express.Router();
 

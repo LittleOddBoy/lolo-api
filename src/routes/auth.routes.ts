@@ -1,11 +1,11 @@
-import * as express from "express";
+import express from "express";
 import {
   signupController,
   loginController,
-} from "@/controllers/auth.controller";
-import { validateBody } from "@/middleware/validate-body.middleware";
-import { loginSchema, signupSchema } from "~/src/schemas/auth.schemas";
-import { authLimiter } from "@/middleware/rate-limit.middleware";
+} from "~/controllers/auth.controller";
+import { validateBody } from "~/middleware/validate-body.middleware";
+import { loginSchema, signupSchema } from "~/schemas/auth.schemas";
+import { authLimiter } from "~/middleware/rate-limit.middleware";
 
 const router = express.Router();
 
