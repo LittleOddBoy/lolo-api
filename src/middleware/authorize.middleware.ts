@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import * as jwt from "jsonwebtoken";
-import { AuthenticatedRequestType } from "@/interfaces/authenticatedRequest.interface";
+import { AuthenticatedRequestType } from "~/interfaces/authenticatedRequest.interface";
 
 export const authorizeMiddleware = async (
   req: AuthenticatedRequestType,
