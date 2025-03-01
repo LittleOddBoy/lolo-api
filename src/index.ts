@@ -1,12 +1,13 @@
-import * as express from "express";
-import * as cors from "cors";
+import express from "express";
+import cors from "cors";
 import helmet from "helmet";
 import * as dotenv from "dotenv";
-import postRoutes from "@/routes/post.routes";
-import authRoutes from "@/routes/auth.routes";
-import commentRoutes from "@/routes/comment.routes";
-import { connectDb } from "~/src/config/sequelize";
-import { generalLimiter } from "@/middleware/rate-limit.middleware";
+// import postRoutes from "~/routes/post.routes";
+import authRoutes from "~/routes/auth.routes";
+// import commentRoutes from "~/routes/comment.routes";
+// import { connectDb } from "~/src/config/sequelize";
+import { connectDb } from "~/config/app-data-source";
+import { generalLimiter } from "~/middleware/rate-limit.middleware";
 
 dotenv.config();
 
@@ -25,8 +26,8 @@ const startServer = async () => {
     app.use(generalLimiter);
 
     app.use("/v2/auth", authRoutes);
-    app.use("/v2/posts", postRoutes);
-    app.use("/v2/comments", commentRoutes);
+    // app.use("/v2/posts", postRoutes);
+    // app.use("/v2/comments", commentRoutes);
 
     app.listen(PORT, () => {
       console.log(`🏃 LOLO is running on http://localhost:${PORT}`);

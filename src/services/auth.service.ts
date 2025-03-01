@@ -1,7 +1,9 @@
-import { User } from "~/src/db/entities/user.model";
+import { User } from "~/db/entities/user.entity";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
+import { UserRepository } from "~/repositories/user.repository";
+import { AppDataSource } from "~/config/app-data-source";
 
 dotenv.config();
 
@@ -21,13 +23,13 @@ export async function signupService(
   password: string
 ): Promise<string> {
   // Check if email already exists
-  const emailExists = await User.findOne({ where: { email } });
+  const emailExists = await UserRepository.checkEmailExists(email);
   if (emailExists) {
     throw new Error("Email is already in use");
   }
 
   // Check if username already exists
-  const usernameExists = await User.findOne({ where: { email } });
+  const usernameExists = await UserRepository.checkUsernameExists(username);
   if (usernameExists) {
     throw new Error("Username is already in use");
   }
@@ -36,18 +38,18 @@ export async function signupService(
   const hashedPassword = await bcrypt.hash(password, 10);
 
   // Insert user into DB
-  const newUser = await User.create({
+  const newUser = await UserRepository.createNewUser(
     username,
     email,
-    password: hashedPassword,
-  });
+    hashedPassword
+  );
 
   // Create token
   const token = jwt.sign(
     {
-      id: newUser.dataValues.id,
-      username: newUser.dataValues.username,
-      email: newUser.dataValues.email,
+      id: newUser.generatedMaps[0].id,
+      username,
+      email,
     },
     SECRET_KEY
   );
@@ -66,16 +68,13 @@ export async function loginService(
   password: string
 ): Promise<string> {
   // Find user by email
-  const user = await User.findOne({ where: { email } });
+  const user = await UserRepository.findByEmail(email);
   if (!user) {
     throw new Error("No such user exists");
   }
 
   // Compare provided password with stored hash
-  const passwordMatch = await bcrypt.compare(
-    password,
-    user.dataValues.password as string
-  );
+  const passwordMatch = await bcrypt.compare(password, user.password as string);
   if (!passwordMatch) {
     throw new Error("Password doesn't match");
   }
@@ -83,9 +82,9 @@ export async function loginService(
   // Create token for user
   const token = jwt.sign(
     {
-      id: user.dataValues.id,
-      username: user.dataValues.username,
-      email: user.dataValues.email,
+      id: user.id,
+      username: user.username,
+      email: user.email,
     },
     SECRET_KEY
   );
