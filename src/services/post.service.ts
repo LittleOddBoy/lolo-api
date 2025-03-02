@@ -1,6 +1,5 @@
-import { QueryTypes } from "sequelize";
-import { sequelize } from "~/src/config/sequelize";
-import { Post } from "~/src/db/entities/post.model";
+import { Post } from "~/db/entities/post.entity";
+import { PostRepository } from "~/repositories/post.repository";
 
 /**
  * Retrieves all posts from the database.
@@ -8,7 +7,7 @@ import { Post } from "~/src/db/entities/post.model";
  * @returns Array of post objects.
  */
 export async function getAllPostsService() {
-  return await Post.findAll();
+  return await PostRepository.find();
 }
 
 /**
@@ -18,7 +17,7 @@ export async function getAllPostsService() {
  * @returns The post object if found; otherwise, undefined.
  */
 export async function getPostByIdService(id: string) {
-  return await Post.findOne({ where: { id } });
+  return await PostRepository.findPostById(id);
 }
 
 /**
@@ -34,8 +33,8 @@ export async function createPostService(
   content: string,
   userId: string
 ) {
-  const newPost = await Post.create({ title, content, userId });
-  return newPost.dataValues;
+  const newPost = await PostRepository.createNewPost(title, content, userId);
+  return newPost;
 }
 
 /**
@@ -51,10 +50,7 @@ export async function updatePostService(
   title: string,
   content: string
 ) {
-  const targetPost = await Post.findOne({ where: { id } });
-  const updatedPost = await targetPost?.update({ title, content });
-
-  return updatedPost?.dataValues;
+  return await PostRepository.updatePost(id, title, content);
 }
 
 /**
@@ -63,8 +59,7 @@ export async function updatePostService(
  * @param {string} id - The UUID of the post to delete.
  */
 export async function deletePostService(id: string) {
-  const targetPost = await Post.findOne({ where: { id } });
-  targetPost?.destroy();
+  return await PostRepository.deletePost(id);
 }
 
 /**
@@ -74,11 +69,5 @@ export async function deletePostService(id: string) {
  * @returns Array of posts matching the search criteria.
  */
 export async function searchPostsService(query: string) {
-  return await sequelize.query(
-    "SELECT * FROM posts WHERE (title LIKE :query OR content LIKE :query)",
-    {
-      replacements: { query: `%${query}%` },
-      type: QueryTypes.SELECT,
-    }
-  );
+  return await PostRepository.searchByKeyword(query);
 }
