@@ -1,26 +1,31 @@
-// import { DataTypes } from "sequelize";
-// import { sequelize } from "~/src/config/sequelize";
-// import { User } from "~/src/db/entities/user.model";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
+import { User } from "~/db/entities/user.entity";
 
-// export const Post = sequelize.define("Post", {
-//   id: {
-//     type: DataTypes.UUID,
-//     defaultValue: DataTypes.UUIDV4,
-//     primaryKey: true,
-//   },
-//   title: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//   },
-//   content: {
-//     type: DataTypes.TEXT,
-//     allowNull: false,
-//   },
-//   createdAt: {
-//     type: DataTypes.DATE,
-//     defaultValue: DataTypes.NOW,
-//   },
-// });
+@Entity("posts")
+export class Post {
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-// Post.belongsTo(User, { foreignKey: "userId", onDelete: "CASCADE" });
-// User.hasMany(Post, { foreignKey: "userId" });
+  @Column({ type: "varchar", length: 200 })
+  title: string;
+
+  @Column("text")
+  content: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @ManyToOne(() => User, (user) => user.posts)
+  user: User;
+}

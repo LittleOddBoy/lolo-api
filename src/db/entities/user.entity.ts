@@ -1,33 +1,7 @@
-// import { DataTypes } from "sequelize";
-// import { sequelize } from "~/src/config/sequelize";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Post } from "~/db/entities/post.entity";
 
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-
-// export const User = sequelize.define("User", {
-//   id: {
-//     type: DataTypes.UUID,
-//     defaultValue: DataTypes.UUIDV4,
-//     primaryKey: true,
-//   },
-//   username: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//   },
-//   email: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//   },
-//   password: {
-//     type: DataTypes.STRING,
-//     allowNull: false,
-//   },
-//   createdAt: {
-//     type: DataTypes.DATE,
-//     defaultValue: DataTypes.NOW,
-//   },
-// });
-
-@Entity()
+@Entity("users")
 export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
@@ -46,4 +20,7 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[];
 }
