@@ -1,4 +1,5 @@
-import { Comment } from "~/src/db/entities/comment.model";
+import { CommentRepository } from "~/repositories/comment.repository";
+import { PostRepository } from "~/repositories/post.repository";
 
 /**
  * Creates a new comment in the database.
@@ -13,8 +14,7 @@ export async function createCommentService(
   userId: string,
   content: string
 ) {
-  const newComment = await Comment.create({ postId, userId, content });
-  return newComment.dataValues;
+  return await CommentRepository.createNewComment(postId, userId, content);
 }
 
 /**
@@ -24,10 +24,7 @@ export async function createCommentService(
  * @returns An array of comments.
  */
 export async function getCommentsByPostService(postId: string) {
-  return await Comment.findOne({
-    where: { postId },
-    order: [["createdAt", "ASC"]],
-  });
+  return await PostRepository.getCommentsByPost(postId);
 }
 
 /**
@@ -38,9 +35,7 @@ export async function getCommentsByPostService(postId: string) {
  * @returns The updated comment object.
  */
 export async function updateCommentService(id: string, content: string) {
-  const targetComment = await Comment.findOne({ where: { id } });
-  const updatedComment = await targetComment?.update({ content });
-  return updatedComment?.dataValues;
+  return await CommentRepository.updateComment(id, content);
 }
 
 /**
@@ -49,6 +44,5 @@ export async function updateCommentService(id: string, content: string) {
  * @param id - The ID of the comment.
  */
 export async function deleteCommentService(id: string) {
-  const targetComment = await Comment.findOne({ where: { id } });
-  targetComment?.destroy();
+  await CommentRepository.deleteComment(id);
 }

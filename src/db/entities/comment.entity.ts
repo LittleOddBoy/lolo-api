@@ -1,27 +1,21 @@
-// import { DataTypes } from "sequelize";
-// import { sequelize } from "~/src/config/sequelize";
-// import { User } from "~/src/db/entities/user.model";
-// import { Post } from "~/src/db/entities/post.model";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne } from "typeorm";
+import { Post } from "~/db/entities/post.entity";
+import { User } from "~/db/entities/user.entity";
 
-// export const Comment = sequelize.define("Comment", {
-//   id: {
-//     type: DataTypes.UUID,
-//     defaultValue: DataTypes.UUIDV4,
-//     primaryKey: true,
-//   },
-//   content: {
-//     type: DataTypes.TEXT,
-//     allowNull: false,
-//   },
-//   createdAt: {
-//     type: DataTypes.DATE,
-//     defaultValue: DataTypes.NOW,
-//   },
-// });
+@Entity("comments")
+export class Comment {
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-// Comment.belongsTo(User, { foreignKey: "userId", onDelete: "CASCADE" });
-// Comment.belongsTo(Post, { foreignKey: "postId", onDelete: "CASCADE" });
+  @Column("text")
+  content: string;
 
-// User.hasMany(Comment, { foreignKey: "userId" });
-// Post.hasMany(Comment, { foreignKey: "postId" });
+  @CreateDateColumn()
+  createdAt: Date;
 
+  @ManyToOne(() => User, (user) => user.comments)
+  user: User;
+
+  @ManyToOne(() => Post, (post) => post.comments, { onDelete: "CASCADE" })
+  post: Post;
+}

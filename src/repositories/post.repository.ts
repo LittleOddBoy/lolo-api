@@ -6,13 +6,11 @@ export const PostRepository = AppDataSource.getRepository(Post).extend({
   async createNewPost(title: string, content: string, userId: string) {
     return await AppDataSource.transaction(async (tem) => {
       // get user
-      console.log(userId);
       const targetUser = await tem
         .getRepository(User)
         .findOne({ where: { id: userId } });
 
       // Check if such user does exist
-      console.log(targetUser);
       if (!targetUser) {
         return "No such user";
       }
@@ -72,5 +70,22 @@ export const PostRepository = AppDataSource.getRepository(Post).extend({
       .orWhere("post.content LIKE :keyword", { keyword: `%${q}%` })
       .orderBy("post.createdAt", "DESC")
       .getMany();
+  },
+
+  async getCommentsByPost(postId: string) {
+    return await AppDataSource.transaction(async (tem) => {
+      const targetComments = await this.createQueryBuilder("post")
+        .leftJoinAndSelect("post.comments", "comment")
+        .where("post.id = :postId", { postId })
+        .orderBy("comment.createdAt", "ASC")
+        .getOne();
+
+      console.log(targetComments);
+      if (!targetComments) {
+        return "No such post does exist!";
+      }
+
+      return targetComments.comments;
+    });
   },
 });
