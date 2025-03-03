@@ -2,12 +2,15 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
-    "rootDirs": ["./src", "./db", "./config"],
+    "rootDir": "./src",
     "outDir": "./dist",
     "strict": true,
     "paths": {
-      "~/*": ["./*"],
-      "@/*": ["./src/*"]
-    }
+      "~/*": ["./src/*"],
+    },
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false
   }
 }

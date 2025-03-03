@@ -1,20 +1,20 @@
-import * as express from "express";
+import express from "express";
 import {
   createCommentController,
   getCommentsByPostController,
   updateCommentController,
   deleteCommentController,
-} from "@/controllers/comment.controller";
-import { validateBody } from "@/middleware/validate-body.middleware";
+} from "~/controllers/comment.controller";
+import { validateBody } from "~/middleware/validate-body.middleware";
 import {
   commentParamsSchema,
   createCommentSchema,
   getCommentsByPostParamsSchema,
   updateCommentSchema,
-} from "@/validation/comment.schemas";
-import { validateParams } from "@/middleware/validate-params.middleware";
-import { authorizeMiddleware } from "@/middleware/authorize.middleware";
-import { commentLimiter } from "@/middleware/rate-limit.middleware";
+} from "~/schemas/comment.schemas";
+import { validateParams } from "~/middleware/validate-params.middleware";
+import { authorizeMiddleware } from "~/middleware/authorize.middleware";
+import { commentLimiter } from "~/middleware/rate-limit.middleware";
 
 const router = express.Router();
 

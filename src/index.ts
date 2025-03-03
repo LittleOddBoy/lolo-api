@@ -1,12 +1,12 @@
-import * as express from "express";
-import * as cors from "cors";
+import express from "express";
+import cors from "cors";
 import helmet from "helmet";
 import * as dotenv from "dotenv";
-import postRoutes from "@/routes/post.routes";
-import authRoutes from "@/routes/auth.routes";
-import commentRoutes from "@/routes/comment.routes";
-import { connectDb } from "~/config/sequelize";
-import { generalLimiter } from "@/middleware/rate-limit.middleware";
+import postRoutes from "~/routes/post.routes";
+import authRoutes from "~/routes/auth.routes";
+import commentRoutes from "~/routes/comment.routes";
+import { connectDb } from "~/config/app-data-source";
+import { generalLimiter } from "~/middleware/rate-limit.middleware";
 
 dotenv.config();
 

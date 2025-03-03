@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
-import * as authService from "@/services/auth.service";
+import * as authService from "~/services/auth.service";
 
-export const signupController = async (
-  req: Request,
-  res: Response
-) => {
+export const signupController = async (req: Request, res: Response) => {
   try {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
@@ -24,10 +21,7 @@ export const signupController = async (
   }
 };
 
-export const loginController = async (
-  req: Request,
-  res: Response
-) => {
+export const loginController = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -45,8 +39,11 @@ export const loginController = async (
   } catch (error) {
     const errMsg = (error as Error).message;
     // Adjust status based on error content
-    const status =
-      errMsg.includes("doesn't match") ? 401 : errMsg.includes("No such user") ? 404 : 400;
+    const status = errMsg.includes("doesn't match")
+      ? 401
+      : errMsg.includes("No such user")
+      ? 404
+      : 400;
     res.status(status).json({ message: errMsg });
   }
 };
