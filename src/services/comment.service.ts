@@ -1,6 +1,28 @@
 import { CommentRepository } from "~/repositories/comment.repository";
 import { PostRepository } from "~/repositories/post.repository";
 
+export class CommentService {
+  public static async getCommentsByPost(postId: string) {
+    return await PostRepository.getCommentsByPost(postId);
+  }
+
+  public static async createComment(
+    postId: string,
+    userId: string,
+    content: string
+  ) {
+    return await CommentRepository.createNewComment(postId, userId, content);
+  }
+
+  public static async updateComment(id: string, content: string) {
+    return await CommentRepository.updateComment(id, content);
+  }
+
+  public static async deleteComment(id: string) {
+    return await CommentRepository.deleteComment(id);
+  }
+}
+
 /**
  * Creates a new comment in the database.
  *
@@ -9,13 +31,13 @@ import { PostRepository } from "~/repositories/post.repository";
  * @param content - The content of the comment.
  * @returns The created comment object.
  */
-export async function createCommentService(
-  postId: string,
-  userId: string,
-  content: string
-) {
-  return await CommentRepository.createNewComment(postId, userId, content);
-}
+// export async function createCommentService(
+//   postId: string,
+//   userId: string,
+//   content: string
+// ) {
+//   return await CommentRepository.createNewComment(postId, userId, content);
+// }
 
 /**
  * Retrieves all comments for a given post.
@@ -23,9 +45,9 @@ export async function createCommentService(
  * @param postId - The ID of the post.
  * @returns An array of comments.
  */
-export async function getCommentsByPostService(postId: string) {
-  return await PostRepository.getCommentsByPost(postId);
-}
+// export async function getCommentsByPostService(postId: string) {
+//   return await PostRepository.getCommentsByPost(postId);
+// }
 
 /**
  * Updates a comment's content by its ID.
@@ -34,15 +56,15 @@ export async function getCommentsByPostService(postId: string) {
  * @param content - The new content for the comment.
  * @returns The updated comment object.
  */
-export async function updateCommentService(id: string, content: string) {
-  return await CommentRepository.updateComment(id, content);
-}
+// export async function updateCommentService(id: string, content: string) {
+//   return await CommentRepository.updateComment(id, content);
+// }
 
 /**
  * Deletes a comment by its ID.
  *
  * @param id - The ID of the comment.
  */
-export async function deleteCommentService(id: string) {
-  await CommentRepository.deleteComment(id);
-}
+// export async function deleteCommentService(id: string) {
+//   await CommentRepository.deleteComment(id);
+// }

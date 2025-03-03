@@ -1,10 +1,11 @@
 import express from "express";
-import {
-  createCommentController,
-  getCommentsByPostController,
-  updateCommentController,
-  deleteCommentController,
-} from "~/controllers/comment.controller";
+// import {
+//   createCommentController,
+//   getCommentsByPostController,
+//   updateCommentController,
+//   deleteCommentController,
+// } from "~/controllers/comment.controller";
+import { CommentController } from "~/controllers/comment.controller";
 import { validateBody } from "~/middleware/validate-body.middleware";
 import {
   commentParamsSchema,
@@ -24,19 +25,22 @@ router.use(commentLimiter);
 router.get(
   "/post/:postId",
   validateParams(getCommentsByPostParamsSchema),
-  getCommentsByPostController
+  CommentController.getCommentsById
 );
-router.post("/", validateBody(createCommentSchema), createCommentController);
+
+router.post("/", validateBody(createCommentSchema), CommentController.createComment);
+
 router.put(
   "/:id",
   validateParams(commentParamsSchema),
   validateBody(updateCommentSchema),
-  updateCommentController
+  CommentController.updateComment
 );
+
 router.delete(
   "/:id",
   validateParams(commentParamsSchema),
-  deleteCommentController
+  CommentController.deleteComment
 );
 
 export default router;
