@@ -1,12 +1,4 @@
 import express from "express";
-// import {
-//   getAllPostsController,
-//   getPostByIdController,
-//   createPostController,
-//   updatePostController,
-//   deletePostController,
-//   searchPostsController,
-// } from "~/controllers/post.controller";
 import { PostController } from "~/controllers/post.controller";
 import { authorizeMiddleware } from "~/middleware/authorize.middleware";
 import { validateBody } from "~/middleware/validate-body.middleware";

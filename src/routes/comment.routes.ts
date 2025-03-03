@@ -1,10 +1,4 @@
 import express from "express";
-// import {
-//   createCommentController,
-//   getCommentsByPostController,
-//   updateCommentController,
-//   deleteCommentController,
-// } from "~/controllers/comment.controller";
 import { CommentController } from "~/controllers/comment.controller";
 import { validateBody } from "~/middleware/validate-body.middleware";
 import {
