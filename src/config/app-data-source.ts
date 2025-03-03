@@ -12,9 +12,9 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASS || "",
   database: process.env.DB_NAME || "lolo_api",
   logging: false,
-  synchronize: true,
   entities: [join(__dirname, "/../db/entities/*.entity.{js,ts}")],
-  migrations: [join(__dirname, "/../db/entities/*.entity.{js,ts}")],
+  migrations: [join(__dirname, "/../db/migrations/*.migration.{js,ts}")],
+  migrationsTableName: "_migrations",
 });
 
 export async function connectDb() {
