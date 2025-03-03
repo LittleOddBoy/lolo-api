@@ -1,12 +1,13 @@
-import * as express from "express";
-import {
-  getAllPostsController,
-  getPostByIdController,
-  createPostController,
-  updatePostController,
-  deletePostController,
-  searchPostsController,
-} from "~/controllers/post.controller";
+import express from "express";
+// import {
+//   getAllPostsController,
+//   getPostByIdController,
+//   createPostController,
+//   updatePostController,
+//   deletePostController,
+//   searchPostsController,
+// } from "~/controllers/post.controller";
+import { PostController } from "~/controllers/post.controller";
 import { authorizeMiddleware } from "~/middleware/authorize.middleware";
 import { validateBody } from "~/middleware/validate-body.middleware";
 import {
@@ -33,28 +34,28 @@ router.get(
   "/search",
   searchLimiter,
   validateQuery(searchPostQuerySchema),
-  searchPostsController
+  PostController.searchPosts
 );
-router.get("/", getAllPostsController);
+router.get("/", PostController.getAllPosts);
 router.get(
   "/:id",
   validateParams(getPostByIdParamsSchema),
-  getPostByIdController
+  PostController.getPostById
 );
 
-router.post("/", validateBody(createPostSchema), createPostController);
+router.post("/", validateBody(createPostSchema), PostController.createPost);
 
 router.put(
   "/:id",
   validateParams(updatePostParamsSchema),
   validateBody(updatePostSchema),
-  updatePostController
+  PostController.updatePost
 );
 
 router.delete(
   "/:id",
   validateParams(deletePostParamsSchema),
-  deletePostController
+  PostController.deletePost
 );
 
 export default router;
