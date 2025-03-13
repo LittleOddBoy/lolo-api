@@ -17,7 +17,7 @@ Make sure you have the following installed:
 ## Installation
 Clone the repository and install dependencies:
 ```sh
-git clone https://github.com/yourusername/lolo-api.git
+git clone https://github.com/LittleOddBoy/lolo-api.git
 cd lolo-api
 npm install  # or yarn install
 ```
