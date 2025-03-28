@@ -1,10 +1,10 @@
 import { Response } from "express";
 import { CommentService } from "~/services/comment.service";
-import { AuthenticatedRequestType } from "~/interfaces/authenticatedRequest.interface";
+import { CompleteRequest } from "~/interfaces/complete-request.interface";
 
 export class CommentController {
   public static async getCommentsById(
-    req: AuthenticatedRequestType,
+    req: CompleteRequest,
     res: Response
   ): Promise<void> {
     const { postId } = req.params;
@@ -18,7 +18,7 @@ export class CommentController {
   }
 
   public static async createComment(
-    req: AuthenticatedRequestType,
+    req: CompleteRequest,
     res: Response
   ): Promise<void> {
     const { postId, userId, content } = req.body;
@@ -36,7 +36,7 @@ export class CommentController {
   }
 
   public static async updateComment(
-    req: AuthenticatedRequestType,
+    req: CompleteRequest,
     res: Response
   ): Promise<void> {
     const { id } = req.params;
@@ -51,7 +51,7 @@ export class CommentController {
   }
 
   public static async deleteComment(
-    req: AuthenticatedRequestType,
+    req: CompleteRequest,
     res: Response
   ): Promise<void> {
     const { id } = req.params;

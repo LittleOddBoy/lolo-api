@@ -1,10 +1,10 @@
 import { Response } from "express";
-import type { AuthenticatedRequestType } from "~/interfaces/authenticatedRequest.interface";
+import type { CompleteRequest } from "~/interfaces/complete-request.interface";
 import { PostService } from "~/services/post.service";
 
 export class PostController {
   public static async getAllPosts(
-    _: AuthenticatedRequestType,
+    _: CompleteRequest,
     res: Response
   ): Promise<void> {
     const posts = await PostService.getAllPosts();
@@ -12,7 +12,7 @@ export class PostController {
   }
 
   public static async getPostById(
-    req: AuthenticatedRequestType,
+    req: CompleteRequest,
     res: Response
   ): Promise<void> {
     const post = await PostService.getPostById(req.params.id as string);
@@ -21,7 +21,7 @@ export class PostController {
   }
 
   public static async createPost(
-    req: AuthenticatedRequestType,
+    req: CompleteRequest,
     res: Response
   ): Promise<void> {
     const { title, content, userId } = req.body;
@@ -35,7 +35,7 @@ export class PostController {
   }
 
   public static async updatePost(
-    req: AuthenticatedRequestType,
+    req: CompleteRequest,
     res: Response
   ): Promise<void> {
     const { title, content } = req.body;
@@ -48,7 +48,7 @@ export class PostController {
   }
 
   public static async deletePost(
-    req: AuthenticatedRequestType,
+    req: CompleteRequest,
     res: Response
   ): Promise<void> {
     await PostService.deletePost(req.params.id);
@@ -56,7 +56,7 @@ export class PostController {
   }
 
   public static async searchPosts(
-    req: AuthenticatedRequestType,
+    req: CompleteRequest,
     res: Response
   ): Promise<void> {
     const { q } = req.query;
