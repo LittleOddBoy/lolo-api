@@ -6,8 +6,8 @@ import { authLimiter } from "~/middleware/rate-limit.middleware";
 
 const router = express.Router();
 
-// rate limiter for authentication
-router.use(authLimiter);
+// General middlewares for this group of routes
+router.use(authLimiter); // Apply auth's rate-limiter
 
 router.post("/signup", validateBody(signupSchema), AuthController.signup);
 router.post("/login", validateBody(loginSchema), AuthController.login);

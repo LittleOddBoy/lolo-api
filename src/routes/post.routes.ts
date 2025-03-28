@@ -19,8 +19,9 @@ import {
 
 const router = express.Router();
 
-router.use(authorizeMiddleware);
-router.use(commentLimiter);
+// General middlewares for this group of routes
+router.use(authorizeMiddleware); // Ensure all the requests are authorized
+router.use(commentLimiter); // Apply comment's rate-limiter (don't ask why)
 
 router.get(
   "/search",
