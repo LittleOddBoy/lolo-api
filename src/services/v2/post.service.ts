@@ -1,12 +1,16 @@
+import { Post } from "~/db/entities/post.entity";
 import { PostRepository } from "~/repositories/post.repository";
 
+/**
+ * Services for post
+ */
 export class PostService {
   /**
    * Retrieves all posts from the database.
    *
-   * @returns Array of post objects.
+   * @returns {Promise<Post[]>} Array of post objects.
    */
-  public static async getAllPosts() {
+  public static async getAllPosts(): Promise<Post[]> {
     return await PostRepository.find();
   }
 
@@ -14,9 +18,9 @@ export class PostService {
    * Retrieves a single post by its ID.
    *
    * @param {string} id - The UUID of the post.
-   * @returns The post object if found; otherwise, undefined.
+   * @returns {Promise<Post | null>} The post object if found; otherwise, undefined.
    */
-  public static async getPostById(id: string) {
+  public static async getPostById(id: string): Promise<Post | null> {
     return await PostRepository.findPostById(id);
   }
 
