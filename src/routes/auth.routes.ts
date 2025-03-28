@@ -1,6 +1,6 @@
 import express from "express";
 import { AuthController } from "~/controllers/auth.controller";
-import { validateBody } from "~/middleware/validate-body.middleware";
+import { validateBody } from "~/middleware/validate.middleware";
 import { loginSchema, signupSchema } from "~/schemas/auth.schemas";
 import { authLimiter } from "~/middleware/rate-limit.middleware";
 

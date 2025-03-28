@@ -1,7 +1,11 @@
 import express from "express";
 import { PostController } from "~/controllers/post.controller";
 import { authorizeMiddleware } from "~/middleware/authorize.middleware";
-import { validateBody } from "~/middleware/validate-body.middleware";
+import {
+  validateQuery,
+  validateBody,
+  validateParams,
+} from "~/middleware/validate.middleware";
 import {
   createPostSchema,
   deletePostParamsSchema,
@@ -10,8 +14,6 @@ import {
   updatePostParamsSchema,
   updatePostSchema,
 } from "~/schemas/post.schemas";
-import { validateParams } from "~/middleware/validate-params.middleware";
-import { validateQuery } from "~/middleware/validate-query.middleware";
 import {
   commentLimiter,
   searchLimiter,
