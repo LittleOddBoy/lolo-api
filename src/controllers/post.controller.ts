@@ -1,6 +1,6 @@
 import { Response } from "express";
 import type { CompleteRequest } from "~/interfaces/complete-request.interface";
-import { PostService } from "~/services/post.service";
+import { PostService } from "~/services/v2/post.service";
 
 export class PostController {
   public static async getAllPosts(

@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { CommentService } from "~/services/comment.service";
+import { CommentService } from "~/services/v2/comment.service";
 import { CompleteRequest } from "~/interfaces/complete-request.interface";
 
 export class CommentController {
