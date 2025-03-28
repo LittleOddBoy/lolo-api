@@ -13,8 +13,9 @@ import { commentLimiter } from "~/middleware/rate-limit.middleware";
 
 const router = express.Router();
 
-router.use(authorizeMiddleware);
-router.use(commentLimiter);
+// General middlewares for this group of routes
+router.use(authorizeMiddleware); // Ensure the request is authorized
+router.use(commentLimiter); // Apply comment's rate-limiter
 
 router.get(
   "/post/:postId",

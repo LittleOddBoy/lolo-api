@@ -1,6 +1,9 @@
 import { CommentRepository } from "~/repositories/comment.repository";
 import { PostRepository } from "~/repositories/post.repository";
 
+/**
+ * Services for comments
+ */
 export class CommentService {
   /**
    * Retrieves all comments for a given post.
