@@ -7,6 +7,9 @@ dotenv.config();
 
 const SECRET_KEY: string = process.env.SECRET_KEY as string;
 
+/**
+ * Services for authentication
+ */
 export class AuthService {
   /**
    * Sign-up and create an account
@@ -21,29 +24,29 @@ export class AuthService {
     email: string,
     password: string
   ): Promise<string> {
-    // Check if email already exists
+    // Check if email already exists in database
     const emailExists = await UserRepository.checkEmailExists(email);
     if (emailExists) {
       throw new Error("Email is already in use");
     }
 
-    // Check if username already exists
+    // Check if username already exists in database
     const usernameExists = await UserRepository.checkUsernameExists(username);
     if (usernameExists) {
       throw new Error("Username is already in use");
     }
 
-    // Hash password
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Insert user into DB
+    // Insert user into database
     const newUser = await UserRepository.createNewUser(
       username,
       email,
       hashedPassword
     );
 
-    // Create token
+    // Generate and return a token
     const token = jwt.sign(
       {
         id: newUser.generatedMaps[0].id,
@@ -63,7 +66,7 @@ export class AuthService {
    * @returns A new token based on user data
    */
   public static async login(email: string, password: string): Promise<string> {
-    // Find user by email
+    // Find user with the specified email
     const user = await UserRepository.findByEmail(email);
     if (!user) {
       throw new Error("No such user exists");
@@ -78,7 +81,7 @@ export class AuthService {
       throw new Error("Password doesn't match");
     }
 
-    // Create token for user
+    // Generate and return token for user
     const token = jwt.sign(
       {
         id: user.id,
