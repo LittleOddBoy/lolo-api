@@ -7,6 +7,7 @@ import authRoutes from "~/routes/auth.routes";
 import commentRoutes from "~/routes/comment.routes";
 import { connectDb } from "~/config/app-data-source";
 import { generalLimiter } from "~/middleware/rate-limit.middleware";
+import { versionMiddleware } from "~/middleware/version.middleware";
 
 dotenv.config();
 
@@ -24,9 +25,9 @@ const startServer = async () => {
     // general middlewares
     app.use(generalLimiter);
 
-    app.use("/v2/auth", authRoutes);
-    app.use("/v2/posts", postRoutes);
-    app.use("/v2/comments", commentRoutes);
+    app.use("/:version/auth", versionMiddleware, authRoutes);
+    app.use("/:version/posts", versionMiddleware, postRoutes);
+    app.use("/:version/comments", versionMiddleware, commentRoutes);
 
     app.listen(PORT, () => {
       console.log(`🏃 LOLO is running on http://localhost:${PORT}`);
