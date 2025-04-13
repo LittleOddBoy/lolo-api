@@ -41,8 +41,6 @@
     "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^22.13.1",
     "@types/sanitize-html": "^2.13.0",
-    "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3"
   }
