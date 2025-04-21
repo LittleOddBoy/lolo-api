@@ -1,7 +1,9 @@
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
-import { UserRepository } from "~/repositories/user.repository";
+import { db } from "~/db";
+import { NewUser, User, users } from "~/db/schema";
+import { eq } from "drizzle-orm";
 
 dotenv.config();
 
@@ -25,13 +27,20 @@ export class AuthService {
     password: string
   ): Promise<string> {
     // Check if email already exists in database
-    const emailExists = await UserRepository.checkEmailExists(email);
+    const emailExists = await db
+      .select({ email: users.email })
+      .from(users)
+      .where(eq(users.email, email));
     if (emailExists) {
       throw new Error("Email is already in use");
     }
 
     // Check if username already exists in database
-    const usernameExists = await UserRepository.checkUsernameExists(username);
+    // const usernameExists = await UserRepository.checkUsernameExists(username);
+    const usernameExists = await db
+      .select({ username: users.username })
+      .from(users)
+      .where(eq(users.username, username));
     if (usernameExists) {
       throw new Error("Username is already in use");
     }
@@ -40,16 +49,25 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insert user into database
-    const newUser = await UserRepository.createNewUser(
-      username,
-      email,
-      hashedPassword
-    );
+    // const newUser = await UserRepository.createNewUser(
+    //   username,
+    //   email,
+    //   hashedPassword
+    // );
+    const newUser = await db
+      .insert(users)
+      .values({ username, email, password: hashedPassword });
+
+    const newUserData = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
 
     // Generate and return a token
     const token = jwt.sign(
       {
-        id: newUser.generatedMaps[0].id,
+        id: newUserData[0].id,
         username,
         email,
       },
@@ -67,7 +85,11 @@ export class AuthService {
    */
   public static async login(email: string, password: string): Promise<string> {
     // Find user with the specified email
-    const user = await UserRepository.findByEmail(email);
+    const user = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
     if (!user) {
       throw new Error("No such user exists");
     }
@@ -75,7 +97,7 @@ export class AuthService {
     // Compare provided password with stored hash
     const passwordMatch = await bcrypt.compare(
       password,
-      user.password as string
+      user[0].password as string
     );
     if (!passwordMatch) {
       throw new Error("Password doesn't match");
@@ -84,9 +106,9 @@ export class AuthService {
     // Generate and return token for user
     const token = jwt.sign(
       {
-        id: user.id,
-        username: user.username,
-        email: user.email,
+        id: user[0].id,
+        username: user[0].username,
+        email: user[0].email,
       },
       SECRET_KEY
     );
