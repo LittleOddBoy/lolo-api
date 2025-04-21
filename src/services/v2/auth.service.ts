@@ -2,7 +2,7 @@ import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 import { db } from "~/db";
-import { NewUser, User, users } from "~/db/schema";
+import { users } from "~/db/schema";
 import { eq } from "drizzle-orm";
 
 dotenv.config();
