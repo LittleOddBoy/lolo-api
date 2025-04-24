@@ -5,7 +5,7 @@ Lolo API is a TypeScript-based RESTful API built with Node.js and Express. It pr
 ## Features
 - Built with **Node.js**, **Express**, and **TypeScript**
 - Modular and scalable architecture
-- SQLite integration (configured in `src/config/database.ts`)
+- MySQL integration (Read [#2](https://github.com/LittleOddBoy/lolo-api/pull/2) to know about my ORM drama)
 - Environment-based configuration
 - Hot-reloading with Nodemon for development
 

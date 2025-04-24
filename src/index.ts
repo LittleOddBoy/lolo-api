@@ -5,7 +5,6 @@ import * as dotenv from "dotenv";
 import postRoutes from "~/routes/post.routes";
 import authRoutes from "~/routes/auth.routes";
 import commentRoutes from "~/routes/comment.routes";
-import { connectDb } from "~/config/app-data-source";
 import { generalLimiter } from "~/middleware/rate-limit.middleware";
 import { versionMiddleware } from "~/middleware/version.middleware";
 
@@ -20,8 +19,6 @@ app.use(express.json());
 
 const startServer = async () => {
   try {
-    await connectDb();
-
     // general middlewares
     app.use(generalLimiter);
 
